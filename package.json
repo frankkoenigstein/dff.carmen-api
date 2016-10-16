@@ -1,0 +1,30 @@
+{
+  "name": "dff.carmen-api",
+  "version": "0.0.1",
+  "description": "carmen rest api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankkoenigstein/dff.carmen-api.git"
+  },
+  "keywords": [
+    "carmen",
+    "node",
+    "express",
+    "rest",
+    "ibeacon"
+  ],
+  "author": "frankkoenigstein",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frankkoenigstein/dff.carmen-api/issues"
+  },
+  "homepage": "https://github.com/frankkoenigstein/dff.carmen-api#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
