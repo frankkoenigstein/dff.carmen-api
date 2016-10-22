@@ -1,8 +1,14 @@
-module.exports = function (proximityUUID, major, minor, rssi, measuredPower, macAddress) {
-    this.major = major;
-    this.measuredPower = measuredPower;
-    this.minor = minor;
-    this.rssi = rssi;
-    this.macAddress = macAddress;
-    this.proximityUUID = proximityUUID;
-}
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var BeaconSchema = new Schema({
+    identifier: String,
+    proximityUUID: String,
+    major: Number,
+    minor: Number,
+    measuredPower: String,
+    macAddress: String
+});
+
+
+module.exports = mongoose.model('Beacon', BeaconSchema);

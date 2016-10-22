@@ -1,6 +1,12 @@
-module.exports = function (identifier, proximityUUID, major, minor) {
-    this.identifier = identifier;
-    this.proximityUUID = proximityUUID;
-    this.major = major;
-    this.minor = minor;
-}
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var RegionSchema = new Schema({
+    identifier: String,
+    proximityUUID: String,
+    major: Number,
+    minor: Number
+});
+
+
+module.exports = mongoose.model('Region', RegionSchema);
