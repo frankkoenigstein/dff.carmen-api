@@ -1,28 +1,22 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var fs = require('fs');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 // db
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://9tx3tkwzw2ymrbzx.myfritz.net:27017', {
-    server: {
-        ssl: true
-    }
-});
-
+var dbconfig = require('./mongodb-config');
 // Use native promises
 mongoose.Promise = global.Promise;
+mongoose.connect(dbconfig.uri, dbconfig.options);
 
-// model
-var User = require('./app/models/user');
-var Region = require('./app/models/region');
-var Beacon = require('./app/models/beacon');
-
-// rest
+// app
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(logger('dev'));
 
 var port = process.env.PORT || 8080;
 var router = express.Router();
@@ -39,98 +33,14 @@ router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
+// routes
+var users = require('./app/routes/users');
+var regions = require('./app/routes/regions');
+var beacons = require('./app/routes/beacons');
 
-// users
-router
-    .route('/users')
-    .post(function (req, res) {
-        var user = new User();
-
-        user.firstname = req.body.firstname;
-        user.lastname = req.body.lastname,
-        user.login = req.body.login;
-
-        user.save(function (err) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json({
-                    message: 'user ' + user.login + ' created'
-                });
-            }
-        });
-
-
-    })
-    .get(function (req, res) {
-        User.find(function(err, users) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(users);
-            }
-        });
-    });
-
-router
-    .route('/users/:user_id')
-    .get(function (req, res) {
-        User.findById(req.params.user_id, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(user);
-            }
-        });
-    })
-    .put(function (req, res) {
-        User.findById(req.params.user_id, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else if (user) {
-                user.firstname = req.body.firstname;
-                user.lastname = req.body.lastname;
-                user.login = req.body.login;
-
-                user.save(function (err) {
-                    if (err) {
-                        res.send(err);
-                    }
-                    else {
-                        res.json({
-                            message: 'user ' + user.login + ' updated'
-                        });
-                    }
-                });
-            }
-            else {
-                res
-                    .status(404)
-                    .json({
-                        message: 'user not found: ' + req.params.user_id
-                    });
-            }
-        });
-    })
-    .delete(function (req, res) {
-        User.remove({
-            _id: req.params.user_id
-        }, function (err, user) {
-
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json({
-                    message: 'user deleted'
-                });
-            }
-        });
-    });
+router.use('/users', users);
+router.use('/regions', regions);
+router.use('/beacons', beacons);
 
 app.use('/api', router);
 app.listen(port);
