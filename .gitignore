@@ -40,3 +40,4 @@ jspm_packages
 
 # mine
 mongodb-config.js
+.vscode
