@@ -9,6 +9,11 @@ var dbconfig = require('./mongodb-config');
 // Use native promises
 mongoose.Promise = global.Promise;
 mongoose.connect(dbconfig.uri, dbconfig.options);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log('db connected');
+});
 
 // app
 var app = express();
@@ -44,6 +49,5 @@ router.use('/beacons', beacons);
 
 app.use('/api', router);
 app.listen(port);
-
 
 console.log('carmen api started on port', port);

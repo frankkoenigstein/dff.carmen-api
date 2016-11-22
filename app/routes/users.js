@@ -81,8 +81,7 @@ router
     .delete(function (req, res) {
         User.remove({
             _id: req.params.user_id
-        }, function (err, user) {
-
+        }, function (err) {
             if (err) {
                 res.send(err);
             }
