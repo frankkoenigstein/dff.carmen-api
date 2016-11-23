@@ -19,30 +19,53 @@ See https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/ for refere
  
  `$ sudo service mongod start`
  
+ or
+ 
+ `$ sudo systemctl enable mongod.service`
+ `$ sudo systemctl start mongod.service`
+ 
 ## MongoDB
 
+See for reference:
+ - https://docs.mongodb.com/manual/tutorial/enable-authentication/
+ - https://docs.mongodb.com/manual/administration/configuration/
+ 
  1. create admin user
  
  ```js
 use admin
-db.createUser(
-  {
+db.createUser({
     user: "admin",
     pwd: "admin",
     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  }
-)
+  })
  ```
  
-  1. create carmen user
+ 1. create carmen user
   
  ```js
 use carmen
-db.createUser(
-  {
+db.createUser({
     user: "carmen",
     pwd: "carmen",
     roles: [ { role: "readWrite", db: "carmen" } ]
-  }
-)
+  })
  ```
+
+ 1. enable authentication
+ 
+  `$ sudo vi /etc/mongod.conf`
+  
+  
+ ```yaml
+security:
+  authorization: enabled
+  ```
+  
+ 1. restart mongo service
+ 
+ `$ sudo service mongod restart`
+ 
+ or
+ 
+ `$ sudo systemctl start mongod.service`
