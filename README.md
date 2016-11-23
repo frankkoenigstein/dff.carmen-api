@@ -33,23 +33,23 @@ See for reference:
  1. create admin user
  
  ```js
-use admin
-db.createUser({
-    user: "admin",
-    pwd: "admin",
-    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
-  })
+ use admin
+ db.createUser({
+     user: "admin",
+     pwd: "admin",
+     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+ })
  ```
  
  1. create carmen user
   
  ```js
-use carmen
-db.createUser({
-    user: "carmen",
-    pwd: "carmen",
-    roles: [ { role: "readWrite", db: "carmen" } ]
-  })
+ use carmen
+ db.createUser({
+     user: "carmen",
+     pwd: "carmen",
+     roles: [ { role: "readWrite", db: "carmen" } ]
+   })
  ```
 
  1. enable authentication
