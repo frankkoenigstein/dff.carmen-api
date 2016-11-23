@@ -14,3 +14,35 @@ See https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-ubuntu/ for refere
  1. Install the latest stable version of MongoDB
  
  `$ sudo apt-get install -y mongodb-org`
+
+ 1. Start MongoDB
+ 
+ `$ sudo service mongod start`
+ 
+## MongoDB
+
+ 1. create admin user
+ 
+ ```js
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+ ```
+ 
+  1. create carmen user
+  
+ ```js
+use carmen
+db.createUser(
+  {
+    user: "carmen",
+    pwd: "carmen",
+    roles: [ { role: "readWrite", db: "carmen" } ]
+  }
+)
+ ```
