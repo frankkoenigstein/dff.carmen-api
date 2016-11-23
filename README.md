@@ -30,39 +30,52 @@ See for reference:
  - https://docs.mongodb.com/manual/tutorial/enable-authentication/
  - https://docs.mongodb.com/manual/administration/configuration/
  
- 1. create admin user
+### create admin user
  
- ```js
- use admin
- db.createUser({
-     user: "admin",
-     pwd: "admin",
-     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
- })
- ```
+```js
+use admin
+db.createUser({
+    user: "admin",
+    pwd: "admin",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+})
+```
  
- 1. create carmen user
+### create carmen user
   
- ```js
- use carmen
- db.createUser({
-     user: "carmen",
-     pwd: "carmen",
-     roles: [ { role: "readWrite", db: "carmen" } ]
-   })
- ```
+```js
+use carmen
+db.createUser({
+    user: "carmen",
+    pwd: "carmen",
+    roles: [ { role: "readWrite", db: "carmen" } ]
+  })
+```
 
- 1. enable authentication
+### enable authentication
  
-  `$ sudo vi /etc/mongod.conf`
+`$ sudo vi /etc/mongod.conf`
+ 
   
-  
- ```yaml
+```yaml
 security:
   authorization: enabled
-  ```
+ ```
+ 
+### bind network interfaces
+
+`$ sudo vi /etc/mongod.conf`
+
+Use your servers ip e. g.:
+
+```yaml
+# network interfaces
+net:
+  port: 27017
+  bindIp: 127.0.0.1,192.168.178..20
+```
   
- 1. restart mongo service
+### restart mongo service
  
  `$ sudo service mongod restart`
  
